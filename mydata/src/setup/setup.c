@@ -49,36 +49,36 @@ int main(int argc, char **argv) {
 
   //定义文件变量--读写文件--追加
   FILE *fp;
-  fp=fopen("../../setup_data/MK","w+");
+  fp=fopen("../../data/setup_data/MK","w+");
   element_random(y);
-  element_fprintf(fp,"y:%B\n", y);
+  element_fprintf(fp,"{\"y\":\"%B\"}\n", y);
   fclose(fp);
 
   FILE *fp1;
-  fp1=fopen("../../setup_data/PP","a+");
+  fp1=fopen("../../data/setup_data/PP","a+");
   element_pow_zn(g1, g, y);
-  element_fprintf(fp1,"g1:%B\n", g1);
+  element_fprintf(fp1,"{\"g1\":\"%B\",", g1);
 
   element_random(g2);
-  element_fprintf(fp1,"g2:%B\n", g2);
+  element_fprintf(fp1,"\"g2\":\"%B\",", g2);
 
   for(int i=0;i<n;i++){
   element_random(t[i]);
-  element_fprintf(fp1,"t[%d+1]:%B\n", i,t[i]);
+  element_fprintf(fp1,"\"t[%d]\":\"%B\",", i,t[i]);
   }
 
   element_random(z1);
   element_pow_zn(v1, g,z1);
-  element_fprintf(fp1,"v1:%B\n", v1);
+  element_fprintf(fp1,"\"v1\":\"%B\",", v1);
 
   for(int i=0;i<m;i++){
   element_random(z[i]);
   element_pow_zn(v[i],g,z[i]);
-  element_fprintf(fp1,"v[%d]:%B\n", i,v[i]);
+  element_fprintf(fp1,"\"v[%d]\":\"%B\",", i,v[i]);
   }
   
   element_pairing(A,g1,g2);
-  element_fprintf(fp1,"A:%B\n",A);
+  element_fprintf(fp1,"\"A\":\"%B\"}",A);
   fclose(fp1);
   //清空变量空间
   element_clear(g);
